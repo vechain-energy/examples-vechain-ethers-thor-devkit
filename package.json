@@ -1,0 +1,14 @@
+{
+  "name": "vechain-with-thor-devkit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bent": "^7.3.12",
+    "ethers": "^6.5.1",
+    "thor-devkit": "^2.0.8"
+  }
+}
