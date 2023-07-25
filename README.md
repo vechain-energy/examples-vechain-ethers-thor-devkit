@@ -6,11 +6,11 @@
 
 In this article, we will demonstrate how to interact with Vechain using [ethers](https://www.npmjs.com/package/ethers) and the [thor-devkit](https://www.npmjs.com/package/thor-devkit).
 
-# Environment
+## Environment
 
 For this example, we will set up a NodeJS script that uses an existing contract on the TestNet to call a contract function.
 
-## Preparation
+### Preparation
 
 Before we begin, let's take note of the following details:
 
@@ -45,7 +45,7 @@ Before we begin, let's take note of the following details:
 ```
 
 
-# Project Setup / Dependencies
+## Project Setup / Dependencies
 
 First, let's set up the project and install the necessary dependencies using yarn:
 
@@ -67,7 +67,7 @@ const getSponsorship = bent('POST', 'https://sponsor-testnet.vechain.energy', 'j
 ```
 
 
-# Build Transaction Call
+## Build Transaction Call
 
 Building the contract call in bytecode is provided by `ethers` and its `Interfaces`:
 
@@ -89,7 +89,7 @@ https://docs.ethers.org/v6/api/abi/#interfaces
 
 The resulting data is stored in a list with clauses, which will be wrapped by a transaction in the next step.
 
-# Generate Vechain Transaction
+## Generate Vechain Transaction
 
 A transaction is required to submit the clauses and call the contracts. A transaction can be built with `thor-devkit` and requires chain related information:
 
@@ -148,7 +148,7 @@ for (const test of tests) {
 ```
 
 
-# Get Fee Delegation Signature
+## Get Fee Delegation Signature
 
 With fee delegation the transaction requires a signature from the gas payee.
 
@@ -177,12 +177,12 @@ transaction.signature = secp256k1.sign(signingHash, Buffer.from(wallet.privateKe
 With Fee Delegation, the signature of the gas payee is appended to the transaction signature:
 
 ```js
-  const signingHash = transaction.signingHash()
-  const originSignature = secp256k1.sign(signingHash, Buffer.from(wallet.privateKey.slice(2), 'hex'))
-  transaction.signature = Buffer.concat([originSignature, sponsorSignature])
+const signingHash = transaction.signingHash()
+const originSignature = secp256k1.sign(signingHash, Buffer.from(wallet.privateKey.slice(2), 'hex'))
+transaction.signature = Buffer.concat([originSignature, sponsorSignature])
 ```
 
-# Submit Transaction
+## Submit Transaction
 
 The built and signed transaction is submitted to the network with a POST to `/transactions`. This completes the transaction building:
 
@@ -195,13 +195,9 @@ Returned is a JSON with the transaction id for further tracking.
 
 The id can be used to get details about the transaction status and its results.
 
-# Conclusion
+## Links
 
-In conclusion, this article demonstrated how to interact with Vechain without relying on Connex by using `ethers` and `thor-devkit`. We built a transaction call, generated a Vechain transaction, simulated the transaction, received a fee delegation signature, signed the transaction, and submitted it to the Vechain network.
-
-If you would like to explore the code further or use it as a reference, you can find the complete code snippet on GitHub:  
-https://github.com/vechain-energy/examples-vechain-ethers-thor-devkit/blob/main/index.js
-
-Feel free to fork the repository and experiment with the code in your own projects.
-
-Happy Vechain development!
+- Full example snippet:  
+  https://github.com/vechain-energy/examples-vechain-ethers-thor-devkit/blob/main/index.js
+- [ethers](https://www.npmjs.com/package/ethers)
+- [thor-devkit](https://www.npmjs.com/package/thor-devkit)
